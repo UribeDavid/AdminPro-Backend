@@ -20,6 +20,9 @@ app.use( express.json() );
 // Base de datos
 dbConnection();
 
+// Directiorio público
+app.use( express.static('public'));
+
 // Rutas
 app.use('/api/todo', require('./routes/busquedas') );
 app.use('/api/upload', require('./routes/uploads') );
