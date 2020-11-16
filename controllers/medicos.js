@@ -28,6 +28,37 @@ const getMedicos = async (req, res = response) => {
     }
 }
 
+const getMedicoById = async (req, res = response) => {
+
+    try {
+
+        const medicoId = req.params.id;
+        
+        const medicoDB = await Medico.findById(medicoId)
+                                     .populate('usuario', 'nombre img')
+                                     .populate('hospital', 'nombre img');
+
+        if ( !medicoDB ) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'Medico no encontrado'
+            });
+        }
+
+        res.status(200).json({
+            ok: true,
+            medico: medicoDB
+        });
+
+    } catch (error) {
+        
+        res.status(500).json({
+            ok: false,
+            msg: 'Error inesperado'
+        });
+    }
+}
+
 const crearMedico = async (req, res = response) => {
 
     const uid = req.uid;
@@ -133,6 +164,7 @@ const borrarMedico = async (req, res = response) => {
 
 module.exports = {
     getMedicos,
+    getMedicoById,
     crearMedico,
     actualizarMedico,
     borrarMedico
