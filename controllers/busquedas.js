@@ -17,13 +17,12 @@ const getTodo = async (req, res = response) => {
             Hospital.find({ nombre: regex }),
             Medico.find({ nombre: regex })
         ]);
-
-        const resultado = [...usuarios, ...hospitales, ...medicos];
         
         res.status(200).json({
             ok: true,
-            msg: 'Get todo',
-            resultado
+            usuarios,
+            hospitales,
+            medicos
         });
 
     } catch (error) {
